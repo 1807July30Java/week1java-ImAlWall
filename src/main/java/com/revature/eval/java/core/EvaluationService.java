@@ -4,6 +4,7 @@ import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
 
+
 public class EvaluationService {
 
 	/**
@@ -31,7 +32,27 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
+		int upper = 0;
+		for (int i = 0; i < phrase.length(); i++) {
+			if (Character.isUpperCase(phrase.charAt(i)) | i == 0 || Character.isWhitespace(phrase.charAt(i-1))) {
+				upper = upper+1;
+			}
+		}
+		
+		char[] acronym = new char[upper];
+		for (int i = 0, j = 0; i < phrase.length(); i++) {
+			if (Character.isUpperCase(phrase.charAt(i)) | i == 0 || Character.isWhitespace(phrase.charAt(i-1))) {
+				acronym[j] = phrase.charAt(i);
+				j++;
+			}
+		}
+		
+		if(acronym.length > 0) {
+			return new String(acronym);
+		} else {
+		
 		return null;
+		}
 	}
 
 	/**
@@ -85,16 +106,31 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo && sideOne == sideThree){
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo && sideOne != sideThree){
+				return true;
+			} else if (sideTwo == sideThree && sideTwo != sideOne){
+				return true;
+			} else if (sideThree == sideOne && sideThree != sideTwo){
+				return true;
+			} else {
+				return false;
+			}
+			
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideTwo != sideThree && sideThree != sideOne){
+				return true;
+			}
 			return false;
 		}
 
@@ -117,7 +153,40 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
+		
+		String stringy = string.toUpperCase();
+		int score = 0;
+		for (int i = 0; i < stringy.length(); i++){
+			
+			char currentChar = stringy.charAt(i);
+			
+			if (currentChar == 'A' || currentChar == 'E' || currentChar == 'I' || 
+					currentChar == 'O' || currentChar == 'U' || currentChar == 'L' || 
+					currentChar == 'N' || currentChar == 'R' || currentChar == 'S' || currentChar == 'T'){
+				score = score + 1;
+			} else if (currentChar == 'D' || currentChar == 'G'){
+				score = score + 2;
+			} else if (currentChar == 'B' || currentChar == 'C' || currentChar == 'M' || 
+					currentChar == 'P'){
+				score = score + 3;
+			} else if (currentChar == 'F' || currentChar == 'H' || currentChar == 'V' || 
+					currentChar == 'W' || currentChar == 'Y'){
+				score = score + 4;
+			} else if (currentChar == 'K'){
+				score = score + 5;
+			} else if (currentChar == 'J' || currentChar == 'X'){
+				score = score + 8;
+			} else if (currentChar == 'Q' || currentChar == 'Z'){
+				score = score + 10;
+			}
+		}
+		if (score > 0) {
+			return score;
+		} else {
+		
 		return 0;
+		}
+
 	}
 
 	/**
@@ -153,7 +222,41 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+
+		boolean allnum = true;
+		int numberlen = 0;
+		for (int i = 0; i < string.length(); i++) {
+			if (Character.isDigit(string.charAt(i))) {
+				numberlen = numberlen + 1;
+			} else {
+				allnum = false;
+			}
+		}
+
+		if (numberlen == 10 && allnum) {
+			return new String(string);
+
+		} else if (numberlen == 11 && allnum) {
+			char[] number = new char[10];
+			for (int i = 1, j = 0; i < string.length(); i++) {
+				number[j] = string.charAt(i);
+				j++;
+			}
+			return new String(number);
+
+		} else {
+			char[] number = new char[10];
+			int result = 0;
+			for (int i = 0, j = 0; i < string.length(); i++) {
+				if (Character.isDigit(string.charAt(i)) && j < 10) {
+					number[j] = string.charAt(i);
+					j++;
+				}
+			}
+			
+			return new String(number);
+			
+		}
 	}
 
 	/**
