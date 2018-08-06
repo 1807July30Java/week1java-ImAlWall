@@ -221,7 +221,7 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
+		// They can bang their head on the keyboard and it'll still return a valid array or numbers
 
 		boolean allnum = true;
 		int numberlen = 0;
@@ -441,9 +441,34 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+	public boolean isPrimeBruteForce(int number) { //I will fully admit to yanking this whole cloth...
+	    for (int i = 2; i < number; i++) {
+	        if (number % i == 0) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+	
+	public int calculateNthPrime(int i) { //but THIS I manhandled to get it to work
+		
+		if (i < 2) {// 0 and negative numbers default to the first prime
+			return 2;
+		}
+		if (i == 2) {
+			return 3;
+		}
+		int whichPrime = i;
+		int thisPrime = 1;
+		int primeCount = 1;
+		for (int j = 2; primeCount <= whichPrime; j++) {
+//			System.out.println("J: "+j+", "+"Which Prime: " + whichPrime+ ", " + "Prime Count: "+primeCount);
+	        if (isPrimeBruteForce(j)) {
+	            primeCount++;
+	            thisPrime = j;
+	        }
+	    }
+		return thisPrime;
 	}
 
 	/**
